@@ -22,7 +22,7 @@ import (
 	"github.com/l-lemaire/opendeck-nanoleaf/internal/pairing"
 )
 
-const fakeID = "8a:9f:09:dd:64:a8"
+const fakeID = "00:55:da:12:34:56"
 
 // fakeConnector points the plugin at a nanoleaftest device, bypassing the
 // config file and the keyring.

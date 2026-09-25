@@ -15,7 +15,7 @@ import (
 	"github.com/l-lemaire/opendeck-nanoleaf/internal/nanoleaf"
 )
 
-// The control commands mirror the Hue CLI's verb-then-kind grammar, with a
+// The control commands use a verb-then-kind grammar, with a
 // single kind for now:
 //
 //	nanoleaf list   devices

@@ -24,7 +24,7 @@ var version = "dev"
 // app carries what every command needs. Commands are methods on it, so they
 // reach the logger and context without global variables.
 type app struct {
-	// log is nil unless --debug was given; the hue package treats nil as
+	// log is nil unless --debug was given; the nanoleaf package treats nil as
 	// "no debug output".
 	log *log.Logger
 	// ctx is cancelled on Ctrl-C so network operations stop cleanly.
@@ -109,7 +109,7 @@ func run(args []string) error {
 // parseFlags parses a command's flags and refuses anything left over.
 //
 // The flag package stops at the first word that is not a flag and leaves it
-// in fs.Args() without complaint. Left unchecked, `hue auth version` would
+// in fs.Args() without complaint. Left unchecked, `nanoleaf auth version` would
 // silently start pairing. Every command goes through this helper so a typo
 // or a misplaced word is reported instead of ignored.
 func parseFlags(fs *flag.FlagSet, args []string) error {

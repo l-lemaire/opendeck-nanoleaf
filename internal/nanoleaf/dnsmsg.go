@@ -2,7 +2,7 @@ package nanoleaf
 
 // This file is a minimal DNS message codec: just enough of RFC 1035 (DNS)
 // and RFC 2782 (SRV records) to send an mDNS question and read the answers a
-// Hue bridge sends back. Go's standard library has no DNS message parser, and
+// Nanoleaf device sends back. Go's standard library has no DNS message parser, and
 // pulling in a full library to read four record types would hide what is
 // actually on the wire.
 //
@@ -30,11 +30,11 @@ import (
 const (
 	dnsTypeA   uint16 = 1  // IPv4 address
 	dnsTypePTR uint16 = 12 // pointer: service type -> service instance name
-	dnsTypeTXT uint16 = 16 // text key=value pairs (bridgeid, modelid)
+	dnsTypeTXT uint16 = 16 // text key=value pairs (id, md, srcvers)
 	dnsTypeSRV uint16 = 33 // service location: target host + port
 	dnsClassIN uint16 = 1  // "Internet" class, the only one in use
 
-	// Seen in bridge answers but not decoded; named only for debug output.
+	// Seen in device answers but not decoded; named only for debug output.
 	dnsTypeAAAA uint16 = 28 // IPv6 address
 	dnsTypeNSEC uint16 = 47 // "no other records exist" marker used by mDNS
 )
@@ -54,7 +54,7 @@ type dnsRecord struct {
 	A   net.IP   // when Type == dnsTypeA
 	PTR string   // when Type == dnsTypePTR: the name pointed to
 	SRV dnsSRV   // when Type == dnsTypeSRV
-	TXT []string // when Type == dnsTypeTXT: one entry per string, e.g. "bridgeid=abc"
+	TXT []string // when Type == dnsTypeTXT: one entry per string, e.g. "md=NL22"
 }
 
 type dnsSRV struct {

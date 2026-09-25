@@ -169,7 +169,7 @@ func (a *app) authForget(args []string) error {
 		}
 	}
 
-	// Nanoleaf lets a token delete itself, so unlike Hue the device can be
+	// Nanoleaf lets a token delete itself, so the device can be
 	// left clean. Failure to reach it is reported but does not stop the
 	// local cleanup.
 	if creds, err := nanoleaf.LoadCredentials(store, d.ID); err == nil && !*keep {
