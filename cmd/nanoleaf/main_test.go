@@ -26,6 +26,14 @@ func TestRunRejectsMalformedArguments(t *testing.T) {
 		{[]string{"auth", "--ip", "10.0.0.1", "extra"}, `unexpected argument "extra"`},
 		{[]string{"auth", "status", "extra"}, `unexpected argument "extra"`},
 		{[]string{"auth", "forget", "now"}, `unexpected argument "now"`},
+		{[]string{"list"}, "what to list is required"},
+		{[]string{"list", "lights"}, `unknown kind "lights"`},
+		{[]string{"list", "devices", "extra"}, `unexpected argument "extra"`},
+		{[]string{"toggle"}, "what to switch is required"},
+		{[]string{"toggle", "panel"}, `unknown kind "panel"`},
+		{[]string{"toggle", "device", "a", "b"}, `unexpected argument "b"`},
+		{[]string{"toggle", "device", "a", "--dry-run"}, "flags go before the name"},
+		{[]string{"watch", "now"}, `unexpected argument "now"`},
 		// global flags must precede the command
 		{[]string{"discover", "--debug"}, "flag provided but not defined"},
 	}

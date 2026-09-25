@@ -15,10 +15,11 @@ import (
 
 // Client talks to one device. Build it with NewClient.
 type Client struct {
-	addr  string // host:port
-	token string // empty until paired
-	log   *log.Logger
-	http  *http.Client
+	addr   string // host:port
+	token  string // empty until paired
+	log    *log.Logger
+	http   *http.Client
+	dryRun io.Writer
 }
 
 // ClientOptions is everything NewClient needs. Only Addr is mandatory.
@@ -31,6 +32,11 @@ type ClientOptions struct {
 	Log *log.Logger
 	// Timeout caps one whole request. Default 10 s.
 	Timeout time.Duration
+	// DryRun, when not nil, turns every non-GET request into a description
+	// written to this writer instead of a network call. Reads still happen.
+	// Living here, at the lowest level, no code path can write to the
+	// device by accident.
+	DryRun io.Writer
 }
 
 // NewClient wires the debug logger into a plain HTTP client. Nanoleaf's local
@@ -42,9 +48,10 @@ func NewClient(o ClientOptions) *Client {
 		timeout = 10 * time.Second
 	}
 	return &Client{
-		addr:  o.Addr,
-		token: o.Token,
-		log:   o.Log,
+		addr:   o.Addr,
+		token:  o.Token,
+		log:    o.Log,
+		dryRun: o.DryRun,
 		http: &http.Client{
 			Timeout:   timeout,
 			Transport: loggingTransport{next: http.DefaultTransport, log: o.Log},
@@ -80,6 +87,15 @@ func (c *Client) do(ctx context.Context, method, path string, body any) (int, []
 		}
 		reader = bytes.NewReader(encoded)
 	}
+	if c.dryRun != nil && method != http.MethodGet {
+		fmt.Fprintf(c.dryRun, "dry run: would send %s http://%s%s\n", method, c.addr, RedactPath(path))
+		if body != nil {
+			pretty, _ := json.MarshalIndent(body, "  ", "  ")
+			fmt.Fprintf(c.dryRun, "  %s\n", pretty)
+		}
+		return http.StatusNoContent, nil, nil
+	}
+
 	req, err := http.NewRequestWithContext(ctx, method, "http://"+c.addr+path, reader)
 	if err != nil {
 		return 0, nil, err

@@ -56,7 +56,7 @@ func (a *app) authPair(args []string) error {
 			case pairing.StageWaiting:
 				if lastLeft < 0 {
 					fmt.Printf("\n%s.\nWaiting up to %ds ", p.Message, p.SecondsLeft)
-				} else if p.SecondsLeft/10 != lastLeft/10 {
+				} else if p.SecondsLeft%10 == 0 && p.SecondsLeft != lastLeft {
 					fmt.Printf(" %ds", p.SecondsLeft) // a tick every ten seconds
 				}
 				lastLeft = p.SecondsLeft

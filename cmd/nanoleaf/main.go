@@ -84,6 +84,12 @@ func run(args []string) error {
 		return a.discover(commandArgs)
 	case "auth":
 		return a.auth(commandArgs)
+	case "list":
+		return a.list(commandArgs)
+	case "on", "off", "toggle":
+		return a.power(command, commandArgs)
+	case "watch":
+		return a.watch(commandArgs)
 	case "version":
 		if len(commandArgs) > 0 {
 			return fmt.Errorf("version: unexpected argument %q", commandArgs[0])
@@ -122,7 +128,13 @@ commands:
   auth          pair with a device (hold its power button) and store the token
   auth status   list paired devices and check their tokens
   auth forget   revoke a device's token and remove it
+  list devices  paired devices with their state
+  on|off|toggle device [--dry-run] [name or id]   (default device when omitted)
+  watch         print changes reported by the device until Ctrl-C
   version       print the version
+
+Names are matched case-insensitively; a unique prefix is enough.
+Command flags go before the name: nanoleaf toggle device --dry-run aurora
 
 global flags (must come before the command):
 `)
