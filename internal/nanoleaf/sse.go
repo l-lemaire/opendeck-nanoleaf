@@ -6,19 +6,19 @@ import (
 	"strings"
 )
 
-// The bridge pushes changes as Server-Sent Events (SSE): a plain text HTTP
+// The device pushes changes as Server-Sent Events (SSE): a plain text HTTP
 // response that never ends, made of blank-line separated blocks like
 //
 //	id: 1758801234:0
 //	data: [{"type":"update","data":[...]}]
 //
-// Lines starting with ":" are comments the bridge uses as keep-alives.
+// Lines starting with ":" are comments a server may use as keep-alives.
 // A field may repeat ("data:" over several lines joins with "\n").
 
 // sseEvent is one dispatched block.
 type sseEvent struct {
 	ID   string
-	Name string // the "event:" field; the bridge leaves it empty
+	Name string // the "event:" field; Nanoleaf leaves it empty
 	Data string
 }
 
@@ -27,7 +27,7 @@ type sseEvent struct {
 // a stream simply ending is not a parse error.
 func readSSE(r io.Reader, handle func(sseEvent)) error {
 	// bufio.Reader.ReadString handles lines of any length; bufio.Scanner
-	// would stop at 64 KiB, and a bridge with many lights can exceed that.
+	// would stop at 64 KiB, which a large payload could exceed.
 	br := bufio.NewReaderSize(r, 64<<10)
 	var ev sseEvent
 	var data []string

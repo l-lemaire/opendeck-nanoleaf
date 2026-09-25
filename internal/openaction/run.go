@@ -15,7 +15,7 @@ import (
 //
 // Handlers run one at a time, in the order events arrive, on the goroutine
 // that called Run. A handler that needs to do slow work (a network call to
-// the bridge) should either be quick about it or start its own goroutine,
+// the device) should either be quick about it or start its own goroutine,
 // otherwise key presses queue up behind it.
 type Handlers struct {
 	WillAppear                 func(ctx context.Context, ev Event, p AppearPayload) error
