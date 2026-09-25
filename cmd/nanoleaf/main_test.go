@@ -21,6 +21,11 @@ func TestRunRejectsMalformedArguments(t *testing.T) {
 		{[]string{"discover", "--timeout"}, "flag needs an argument"},
 		{[]string{"discover", "--timeout", "soon"}, "invalid value"},
 		{[]string{"discover", "--bogus"}, "flag provided but not defined"},
+		{[]string{"auth", "version"}, `unknown subcommand "version"`},
+		{[]string{"auth", "--ip"}, "flag needs an argument"},
+		{[]string{"auth", "--ip", "10.0.0.1", "extra"}, `unexpected argument "extra"`},
+		{[]string{"auth", "status", "extra"}, `unexpected argument "extra"`},
+		{[]string{"auth", "forget", "now"}, `unexpected argument "now"`},
 		// global flags must precede the command
 		{[]string{"discover", "--debug"}, "flag provided but not defined"},
 	}

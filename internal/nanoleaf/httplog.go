@@ -80,7 +80,7 @@ func RedactPath(s string) string {
 		if len(token) > 4 {
 			token = token[:4]
 		}
-		return sub[1] + token + "[redacted]"
+		return sub[1] + token + "-REDACTED"
 	})
 }
 

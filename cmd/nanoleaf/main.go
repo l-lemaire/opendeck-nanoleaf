@@ -82,6 +82,8 @@ func run(args []string) error {
 	switch command {
 	case "discover":
 		return a.discover(commandArgs)
+	case "auth":
+		return a.auth(commandArgs)
 	case "version":
 		if len(commandArgs) > 0 {
 			return fmt.Errorf("version: unexpected argument %q", commandArgs[0])
@@ -117,6 +119,9 @@ func printUsage(fs *flag.FlagSet) {
 
 commands:
   discover      find Nanoleaf devices on the local network
+  auth          pair with a device (hold its power button) and store the token
+  auth status   list paired devices and check their tokens
+  auth forget   revoke a device's token and remove it
   version       print the version
 
 global flags (must come before the command):

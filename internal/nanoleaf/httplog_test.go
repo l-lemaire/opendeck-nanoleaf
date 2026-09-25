@@ -11,8 +11,8 @@ import (
 
 func TestRedactPath(t *testing.T) {
 	cases := map[string]string{
-		"/api/v1/AbCdEfGh0123456789/state":          "/api/v1/AbCd[redacted]/state",
-		"http://10.0.0.5:16021/api/v1/tok/state/on": "http://10.0.0.5:16021/api/v1/tok[redacted]/state/on",
+		"/api/v1/AbCdEfGh0123456789/state":          "/api/v1/AbCd-REDACTED/state",
+		"http://10.0.0.5:16021/api/v1/tok/state/on": "http://10.0.0.5:16021/api/v1/tok-REDACTED/state/on",
 		"/api/v1/new": "/api/v1/new",
 		"/api/v1/":    "/api/v1/",
 		"/other":      "/other",
@@ -43,7 +43,7 @@ func TestLoggingTransportRedactsToken(t *testing.T) {
 	if strings.Contains(logged, "SUPERSECRETTOKEN123") {
 		t.Errorf("token leaked into debug output:\n%s", logged)
 	}
-	for _, want := range []string{"PUT /api/v1/SUPE[redacted]/state", `{"on":{"value":true}}`, "200 OK", `{"value":true}`} {
+	for _, want := range []string{"PUT /api/v1/SUPE-REDACTED/state", `{"on":{"value":true}}`, "200 OK", `{"value":true}`} {
 		if !strings.Contains(logged, want) {
 			t.Errorf("debug output missing %q:\n%s", want, logged)
 		}
