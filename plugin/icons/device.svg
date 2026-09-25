@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144 144" width="144" height="144">
-  <defs>
+<defs>
     <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#26262a"/>
       <stop offset="1" stop-color="#101012"/>
@@ -18,9 +18,12 @@
       <stop offset="1" stop-color="#ffb63a" stop-opacity="0"/>
     </radialGradient>
   </defs>
-  <circle cx="72" cy="62" r="60" fill="url(#glow)"/>
-  <path d="M30 92 L54 50 L78 92 Z" fill="url(#warm)" stroke="#fff3cf" stroke-width="3" stroke-linejoin="round"/>
-  <path d="M54 50 L78 92 L102 50 Z" fill="url(#warm2)" stroke="#fff3cf" stroke-width="3" stroke-linejoin="round"/>
-  <path d="M78 92 L102 50 L126 92 Z" fill="url(#warm)" stroke="#fff3cf" stroke-width="3" stroke-linejoin="round"/>
-  <path d="M54 50 L78 8 L102 50 Z" fill="url(#warm2)" stroke="#fff3cf" stroke-width="3" stroke-linejoin="round"/>
+  <circle cx="72" cy="60" r="62" fill="url(#glow)"/>
+  <g transform="rotate(-12 72 60)">
+  <path d="M12.0 77.3 L32.0 42.7 L52.0 77.3 Z" fill="url(#warm)" stroke="#fff3cf" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M32.0 42.7 L72.0 42.7 L52.0 77.3 Z" fill="url(#warm2)" stroke="#fff3cf" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M52.0 77.3 L72.0 42.7 L92.0 77.3 Z" fill="#ffc94a" stroke="#fff3cf" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M72.0 42.7 L112.0 42.7 L92.0 77.3 Z" fill="url(#warm)" stroke="#fff3cf" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M92.0 77.3 L112.0 42.7 L132.0 77.3 Z" fill="url(#warm2)" stroke="#fff3cf" stroke-width="3" stroke-linejoin="round"/>
+  </g>
 </svg>
