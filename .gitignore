@@ -1,0 +1,9 @@
+/bin/
+/dist/
+/coverage.out
+.env
+.env.*
+!.env.example
+credentials*.json
+config.local.json
+*.key
