@@ -90,6 +90,8 @@ func run(args []string) error {
 		return a.power(command, commandArgs)
 	case "watch":
 		return a.watch(commandArgs)
+	case "plugin":
+		return a.plugin(commandArgs)
 	case "version":
 		if len(commandArgs) > 0 {
 			return fmt.Errorf("version: unexpected argument %q", commandArgs[0])
@@ -131,6 +133,8 @@ commands:
   list devices  paired devices with their state
   on|off|toggle device [--dry-run] [name or id]   (default device when omitted)
   watch         print changes reported by the device until Ctrl-C
+  plugin status        show where the OpenDeck plugin is installed and logs
+  plugin debug on|off  toggle full debug output in the plugin log
   version       print the version
 
 Names are matched case-insensitively; a unique prefix is enough.

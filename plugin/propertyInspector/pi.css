@@ -1,0 +1,242 @@
+/*
+ * Property inspector styling, matched to OpenDeck's panel: dark greys with
+ * the host's orange highlight. Colours come from the host's own palette
+ * (see the -info argument OpenDeck passes: highlightColor #F7821B).
+ */
+:root {
+	--bg: #2d2d2d;
+	--field: #3d3d3d;
+	--field-hover: #474747;
+	--border: #4a4a4a;
+	--text: #e4e4e4;
+	--muted: #9a9a9a;
+	--accent: #f7821b;
+	--ok: #5cc46a;
+	--error: #f0705a;
+	--radius: 6px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+	margin: 0;
+	padding: 10px 12px;
+	font: 13px/1.4 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	color: var(--text);
+	background: var(--bg);
+}
+
+.row {
+	display: grid;
+	grid-template-columns: 76px 1fr;
+	align-items: center;
+	gap: 10px;
+	margin-bottom: 10px;
+}
+
+label {
+	text-align: right;
+	font-weight: 600;
+	color: var(--muted);
+	white-space: nowrap;
+}
+
+input[type="text"] {
+	width: 100%;
+	padding: 7px 10px;
+	color: var(--text);
+	background-color: var(--field);
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+	font: inherit;
+	transition: background-color 120ms, border-color 120ms, box-shadow 120ms;
+}
+input[type="text"]:hover { background-color: var(--field-hover); }
+input[type="text"]:focus {
+	outline: none;
+	border-color: var(--accent);
+	box-shadow: 0 0 0 2px rgba(247, 130, 27, 0.35);
+}
+input::placeholder { color: var(--muted); }
+
+.hint {
+	margin: -4px 0 10px 86px;
+	font-size: 11px;
+	color: var(--muted);
+}
+
+/* Native select, restyled: no system chrome, our own chevron. */
+select {
+	appearance: none;
+	-webkit-appearance: none;
+	width: 100%;
+	padding: 7px 32px 7px 10px;
+	color: var(--text);
+	background-color: var(--field);
+	background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1.5 6 6.5 11 1.5' fill='none' stroke='%239a9a9a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+	background-repeat: no-repeat;
+	background-position: right 10px center;
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+	font: inherit;
+	cursor: pointer;
+	transition: background-color 120ms, border-color 120ms, box-shadow 120ms;
+}
+select:hover { background-color: var(--field-hover); }
+select:focus {
+	outline: none;
+	border-color: var(--accent);
+	box-shadow: 0 0 0 2px rgba(247, 130, 27, 0.35);
+}
+select:disabled {
+	color: var(--muted);
+	cursor: default;
+	opacity: 0.7;
+}
+option { background: var(--field); color: var(--text); }
+
+button {
+	justify-self: start;
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 6px 12px;
+	color: var(--text);
+	background: var(--field);
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+	font: inherit;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background-color 120ms, border-color 120ms;
+}
+button:hover { background: var(--field-hover); border-color: #5a5a5a; }
+button:active { background: #303030; }
+button:focus-visible {
+	outline: none;
+	border-color: var(--accent);
+	box-shadow: 0 0 0 2px rgba(247, 130, 27, 0.35);
+}
+button svg { width: 14px; height: 14px; }
+
+/* Status line: a coloured dot and a short message. */
+.status {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin: 2px 0 0 86px;
+	min-height: 1.4em;
+	color: var(--muted);
+}
+.status::before {
+	content: "";
+	flex: none;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: var(--muted);
+	transition: background-color 120ms;
+}
+.status.ok::before { background: var(--ok); }
+.status.error { color: var(--error); }
+.status.error::before { background: var(--error); }
+.status.busy::before {
+	background: var(--accent);
+	animation: pulse 1s ease-in-out infinite;
+}
+@keyframes pulse {
+	0%, 100% { opacity: 1; }
+	50% { opacity: 0.3; }
+}
+
+/* ---- Pairing wizard ---- */
+
+.steps {
+	display: flex;
+	gap: 6px;
+	list-style: none;
+	counter-reset: step;
+	margin: 0 0 12px 0;
+	padding: 0;
+}
+.steps li {
+	flex: 1;
+	counter-increment: step;
+	padding: 6px 8px;
+	font-size: 11px;
+	font-weight: 600;
+	color: var(--muted);
+	background: var(--field);
+	border-radius: var(--radius);
+	border-bottom: 2px solid transparent;
+}
+.steps li::before {
+	content: counter(step) " ";
+	display: inline-block;
+	min-width: 16px;
+	height: 16px;
+	margin-right: 4px;
+	text-align: center;
+	line-height: 16px;
+	border-radius: 50%;
+	background: var(--border);
+	color: var(--text);
+	font-size: 10px;
+}
+.steps li.current { color: var(--text); border-bottom-color: var(--accent); }
+.steps li.current::before { background: var(--accent); color: #111; }
+.steps li.done::before { content: "✓"; background: var(--ok); color: #111; }
+
+.choices { display: flex; flex-direction: column; gap: 6px; margin: 8px 0; }
+.choice {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 8px 10px;
+	background: var(--field);
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+	cursor: pointer;
+}
+.choice:hover { background: var(--field-hover); }
+.choice input { accent-color: var(--accent); margin: 0; }
+.choice .name { font-weight: 600; }
+.choice .detail { color: var(--muted); font-size: 11px; margin-left: auto; }
+
+.actions { display: flex; align-items: center; gap: 12px; margin-top: 8px; }
+button.link {
+	background: none;
+	border: none;
+	color: var(--accent);
+	padding: 4px 0;
+	font-weight: 600;
+}
+button.link:hover { background: none; text-decoration: underline; }
+button:disabled { opacity: 0.5; cursor: default; }
+
+.bridge-art { text-align: center; margin: 4px 0; }
+.bridge-art svg { width: 160px; height: 110px; }
+.pulse-ring { animation: ring 1.4s ease-out infinite; transform-origin: 139px 35px; }
+@keyframes ring {
+	0%   { opacity: 0.9; transform: scale(0.8); }
+	100% { opacity: 0;   transform: scale(1.35); }
+}
+
+.instruction {
+	margin: 4px 0;
+	text-align: center;
+	font-size: 15px;
+	font-weight: 600;
+	color: var(--text);
+}
+.countdown {
+	margin: 0;
+	text-align: center;
+	font-size: 28px;
+	font-weight: 600;
+	color: var(--accent);
+	font-variant-numeric: tabular-nums;
+}
+#pair .status { margin-left: 0; justify-content: center; }
+#pair-find .status { justify-content: flex-start; }

@@ -1,0 +1,100 @@
+<!doctype html>
+<!--
+  Property inspector shared by the three actions. OpenDeck loads this page
+  in a webview next to the button's settings and calls
+  connectOpenActionSocket(...) with the connection details. Everything else
+  is in pi.js. No framework, no build step.
+-->
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="pi.css" />
+		<script src="pi.js"></script>
+	</head>
+	<body>
+		<!--
+		  Pairing wizard, shown instead of the device picker while no device is
+		  paired. Three steps: find the device, hold its button, done.
+		-->
+		<section id="pair" hidden>
+			<ol class="steps">
+				<li id="step-1" class="current">Find your device</li>
+				<li id="step-2">Hold the button</li>
+				<li id="step-3">Done</li>
+			</ol>
+
+			<!-- Step 1: discovery result, a choice, or a manual address. -->
+			<div id="pair-find">
+				<p id="find-status" class="status busy">Searching your network for Nanoleaf devices…</p>
+				<div id="bridge-list" class="choices"></div>
+				<div class="row" id="manual-row" hidden>
+					<label for="pair-address">Address</label>
+					<input id="pair-address" type="text" placeholder="e.g. 192.168.1.42" />
+				</div>
+				<div class="actions">
+					<button id="pair-button" type="button" disabled>Continue</button>
+					<button id="search-again" type="button" class="link">Search again</button>
+				</div>
+			</div>
+
+			<!-- Step 2: the physical button, with a countdown. -->
+			<div id="pair-press" hidden>
+				<div class="bridge-art">
+					<svg viewBox="0 0 160 110" aria-hidden="true">
+						<path d="M20 90 L44 50 L68 90 Z" fill="#f4f4f4" stroke="#c9c9c9" stroke-width="2"/>
+						<path d="M44 50 L68 90 L92 50 Z" fill="#e6e6e6" stroke="#c9c9c9" stroke-width="2"/>
+						<path d="M68 90 L92 50 L116 90 Z" fill="#f4f4f4" stroke="#c9c9c9" stroke-width="2"/>
+						<rect x="112" y="24" width="38" height="22" rx="5" fill="#f4f4f4" stroke="#c9c9c9" stroke-width="2"/>
+						<circle id="art-button" cx="139" cy="35" r="6" fill="#e3e3e3" stroke="#bdbdbd" stroke-width="2"/>
+						<circle cx="139" cy="35" r="12" fill="none" stroke="#f7821b" stroke-width="3" class="pulse-ring"/>
+						<circle cx="121" cy="35" r="2.5" fill="#3fa9f5"/>
+					</svg>
+				</div>
+				<p class="instruction" id="press-instruction">Contacting the device…</p>
+				<p id="pair-countdown" class="countdown" hidden></p>
+				<p id="press-status" class="status busy"></p>
+			</div>
+
+			<!-- Step 3 / errors. -->
+			<div id="pair-result" hidden>
+				<p id="result-status" class="status"></p>
+				<div class="actions">
+					<button id="retry-button" type="button">Try again</button>
+				</div>
+			</div>
+		</section>
+
+		<section id="configure">
+		<div class="row">
+			<label for="target" id="target-label">Device</label>
+			<select id="target" disabled>
+				<option value="">Loading…</option>
+			</select>
+		</div>
+		<div class="row">
+			<label for="label">Key text</label>
+			<select id="label">
+				<option value="name">Device name</option>
+				<option value="custom">Custom text</option>
+				<option value="none">None</option>
+			</select>
+		</div>
+		<div class="row" id="custom-row" hidden>
+			<label for="custom-label">Text</label>
+			<input id="custom-label" type="text" maxlength="40" placeholder="e.g. Desk" />
+		</div>
+		<p class="hint">Font, size, colour and position of the text are set in OpenDeck's key settings.</p>
+		<div class="row">
+			<label></label>
+			<button id="refresh" type="button" title="Ask the devices again">
+				<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.5 8a5.5 5.5 0 1 1-1.6-3.9M13.5 2v3h-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+				Refresh
+			</button>
+		</div>
+		<p id="status" class="status busy">Connecting…</p>
+		<div class="actions">
+			<button id="pair-another" type="button" class="link">Pair another device</button>
+		</div>
+		</section>
+	</body>
+</html>

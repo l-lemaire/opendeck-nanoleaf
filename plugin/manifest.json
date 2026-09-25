@@ -1,0 +1,40 @@
+{
+	"Name": "Nanoleaf",
+	"Description": "Toggle Nanoleaf light panels. Pair from the key panel, no other setup.",
+	"Author": "l-lemaire",
+	"Version": "0.1.0",
+	"Icon": "icons/plugin",
+	"Category": "Nanoleaf",
+	"CategoryIcon": "icons/plugin",
+	"CodePaths": {
+		"x86_64-unknown-linux-gnu": "x86_64-unknown-linux-gnu/bin/opendeck-nanoleaf",
+		"aarch64-unknown-linux-gnu": "aarch64-unknown-linux-gnu/bin/opendeck-nanoleaf",
+		"x86_64-apple-darwin": "x86_64-apple-darwin/bin/opendeck-nanoleaf",
+		"aarch64-apple-darwin": "aarch64-apple-darwin/bin/opendeck-nanoleaf",
+		"x86_64-pc-windows-msvc": "x86_64-pc-windows-msvc/bin/opendeck-nanoleaf.exe"
+	},
+	"CodePathLin": "x86_64-unknown-linux-gnu/bin/opendeck-nanoleaf",
+	"CodePathMac": "x86_64-apple-darwin/bin/opendeck-nanoleaf",
+	"CodePathWin": "x86_64-pc-windows-msvc/bin/opendeck-nanoleaf.exe",
+	"OS": [
+		{ "Platform": "linux" },
+		{ "Platform": "mac", "MinimumVersion": "10.11" },
+		{ "Platform": "windows", "MinimumVersion": "10" }
+	],
+	"Actions": [
+		{
+			"UUID": "com.github.l-lemaire.nanoleaf.toggle-device",
+			"Name": "Toggle device",
+			"Tooltip": "Switch a Nanoleaf device on or off",
+			"Icon": "icons/device",
+			"Controllers": ["Keypad"],
+			"SupportedInMultiActions": true,
+			"DisableAutomaticStates": true,
+			"PropertyInspectorPath": "propertyInspector/index.html",
+			"States": [
+				{ "Image": "icons/device-off", "Name": "Off", "TitleAlignment": "bottom", "FontSize": "9" },
+				{ "Image": "icons/device-on", "Name": "On", "TitleAlignment": "bottom", "FontSize": "9" }
+			]
+		}
+	]
+}
